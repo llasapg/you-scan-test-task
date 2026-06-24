@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: dashboard
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: api
+        image: your-registry/dashboard-api:latest
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: backend-config
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /graphql?sdl
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /graphql?sdl
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+  namespace: dashboard
+spec:
+  selector:
+    app: api
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  type: ClusterIP
+
