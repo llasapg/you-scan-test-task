@@ -1,8 +1,8 @@
 # Dashboard
 
-A widget-based dashboard. Add charts and text widgets, edit them, delete them. That's it.
+A widget-based dashboard. Add charts and text widgets, edit them, delete them.
 
-The API now uses an in-memory database, so no PostgreSQL setup is required.
+The API now uses an in-memory database
 
 ## Running Locally
 
@@ -24,13 +24,9 @@ npm install
 npm run dev
 ```
 
-## Deploying to Kubernetes
+## Deploying is done to Cloudflare Pages and railway
 
-its done by CI/CD pipeline, but you can also do it manually:
-
-```bash
-kubectl apply -f k8s
-```
+its done by CI/CD pipeline configured there
 
 ## GraphQL API
 
