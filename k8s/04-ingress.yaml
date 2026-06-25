@@ -4,16 +4,15 @@ metadata:
   name: dashboard-ingress
   namespace: dashboard
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - dashboard.yourdomain.com
+    - gavrafana.com
     secretName: dashboard-tls
   rules:
-  - host: dashboard.yourdomain.com
+  - host: gavrafana.com
     http:
       paths:
       - path: /graphql
@@ -30,4 +29,3 @@ spec:
             name: frontend-service
             port:
               number: 80
-

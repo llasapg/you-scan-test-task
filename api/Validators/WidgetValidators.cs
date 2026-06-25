@@ -7,6 +7,10 @@ public class CreateWidgetInputValidator : AbstractValidator<CreateWidgetInput>
 {
     public CreateWidgetInputValidator()
     {
+        RuleFor(x => x.DashboardId)
+            .NotEmpty()
+            .WithMessage("Dashboard ID is required");
+
         RuleFor(x => x.Type)
             .IsInEnum()
             .WithMessage("Invalid widget type");
@@ -43,7 +47,7 @@ public class DeleteWidgetInputValidator : AbstractValidator<DeleteWidgetInput>
     }
 }
 
-public record CreateWidgetInput(WidgetType Type, string? Data);
+public record CreateWidgetInput(Guid DashboardId, WidgetType Type, string? Data);
 public record UpdateWidgetInput(Guid Id, string? Data);
 public record DeleteWidgetInput(Guid Id);
 

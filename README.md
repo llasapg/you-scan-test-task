@@ -2,6 +2,8 @@
 
 A widget-based dashboard. Add charts and text widgets, edit them, delete them. That's it.
 
+The API now uses an in-memory database, so no PostgreSQL setup is required.
+
 ## Running Locally
 
 The easy way:
@@ -12,8 +14,6 @@ Then open http://localhost:3000
 
 The manual way:
 ```bash
-# Start PostgreSQL (however you prefer)
-
 # API
 cd api
 dotnet run
@@ -47,6 +47,7 @@ Available at `/graphql`. Check `/graphql` in your browser for GraphQL Playground
 
 ## Notes
 
-- Widgets are stored in PostgreSQL
+- Widgets and dashboards are stored in-memory while the API process is running
+- Restarting the API resets the data
 - Position reordering happens automatically on delete
 - Text widgets can store up to 5000 characters

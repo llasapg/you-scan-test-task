@@ -5,11 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services;
 
-public class WidgetService( ApplicationDbContext context) : IWidgetService
+public class WidgetService(ApplicationDbContext context) : IWidgetService
 {
-    public async Task<List<Widget>> GetAllAsync()
+    public async Task<List<Widget>> GetAllAsync(Guid dashboardId)
     {
         return await context.Widgets
+            .Where(w => w.DashboardId == dashboardId)
             .OrderBy(w => w.Position)
             .ToListAsync();
     }
@@ -19,13 +20,16 @@ public class WidgetService( ApplicationDbContext context) : IWidgetService
         return await context.Widgets.FindAsync(id);
     }
 
-    public async Task<Widget> CreateAsync(WidgetType type, string? data)
+    public async Task<Widget> CreateAsync(Guid dashboardId, WidgetType type, string? data)
     {
-        var position = await context.Widgets.CountAsync();
+        var position = await context.Widgets
+            .Where(w => w.DashboardId == dashboardId)
+            .CountAsync();
         
         var widget = new Widget
         {
             Id = Guid.NewGuid(),
+            DashboardId = dashboardId,
             Type = type,
             Position = position,
             Data = data,
@@ -59,17 +63,19 @@ public class WidgetService( ApplicationDbContext context) : IWidgetService
         if (widget == null)
             return false;
 
+        var dashboardId = widget.DashboardId;
         context.Widgets.Remove(widget);
         await context.SaveChangesAsync();
 
-        await ReorderPositionsAsync();
+        await ReorderPositionsAsync(dashboardId);
 
         return true;
     }
 
-    private async Task ReorderPositionsAsync()
+    private async Task ReorderPositionsAsync(Guid dashboardId)
     {
         var widgets = await context.Widgets
+            .Where(w => w.DashboardId == dashboardId)
             .OrderBy(w => w.Position)
             .ToListAsync();
 

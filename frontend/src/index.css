@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,6 +9,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #0b0c0e;
+  color: #d8d9da;
 }
 
 code {
@@ -14,4 +20,5 @@ code {
 
 #root {
   min-height: 100vh;
+  background: #0b0c0e;
 }

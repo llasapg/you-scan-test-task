@@ -11,5 +11,5 @@ var app = builder.Build();
 
 app.UseCors();
 app.MapGraphQL();
-await app.ApplyMigrations();
+await app.InitializeDatabase();
 await app.RunAsync();
