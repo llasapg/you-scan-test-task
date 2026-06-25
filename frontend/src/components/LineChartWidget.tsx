@@ -12,7 +12,6 @@ const generateMonthlyIncomeData = () => {
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const currentMonth = new Date().getMonth();
   
-  // Generate more dynamic monthly income with visible swings and growth trend
   const baseIncome = 42000;
   return months.slice(0, currentMonth + 1).map((month, i) => {
     const growthFactor = 1 + (i * 0.03);

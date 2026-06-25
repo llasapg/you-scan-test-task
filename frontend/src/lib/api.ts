@@ -4,7 +4,6 @@ import type { Widget } from '../types/widget';
 import type { Dashboard } from '../types/dashboard';
 import { WidgetType } from '../types/widget';
 
-// Dashboard queries
 export const GET_DASHBOARDS = gql`
   query GetDashboards {
     dashboards {
@@ -64,7 +63,6 @@ export const DELETE_DASHBOARD = gql`
   }
 `;
 
-// Widget queries
 export const GET_WIDGETS = gql`
   query GetWidgets($dashboardId: UUID!) {
     widgets(dashboardId: $dashboardId) {
@@ -119,7 +117,6 @@ export const DELETE_WIDGET = gql`
   }
 `;
 
-// Dashboard API functions
 export const getDashboards = async (): Promise<Dashboard[]> => {
   const data = await graphqlClient.request<{ dashboards: Dashboard[] }>(GET_DASHBOARDS);
   return data.dashboards;
